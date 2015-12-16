@@ -26,9 +26,9 @@ browsers = [{
 }, {
     'appiumVersion': '1.4.16',
     'platformName': 'Android',
-    'platformVersion': '5.1',
+    'platformVersion': '4.4',
     'deviceName': 'Android Emulator',
-    'name': 'Python Appium Android 5.1 example'
+    'name': 'Python Appium Android 4.4 example'
 }]
 
 
