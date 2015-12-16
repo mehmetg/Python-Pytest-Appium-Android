@@ -53,7 +53,7 @@ class BaseTest(unittest.TestCase):
             self.desired_capabilities['tunnel-identifier'] = BaseTest.tunnel_id
         if BaseTest.build_tag:
             self.desired_capabilities['build'] = BaseTest.build_tag
-            
+
         print("http://%s:%s@%s:%s/wd/hub" %
                                  (BaseTest.username,
                                   BaseTest.access_key,
