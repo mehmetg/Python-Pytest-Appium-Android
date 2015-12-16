@@ -50,7 +50,11 @@ class BaseTest(unittest.TestCase):
 
         if BaseTest.tunnel_id:
             self.desired_capabilities['tunnel-identifier'] = BaseTest.tunnel_id
-
+        print("http://%s:%s@%s:%s/wd/hub" %
+                                 (BaseTest.username,
+                                  BaseTest.access_key,
+                                  BaseTest.selenium_host,
+                                  BaseTest.selenium_port))
         self.driver = webdriver.Remote(
                 command_executor="http://%s:%s@%s:%s/wd/hub" %
                                  (BaseTest.username,
