@@ -1,0 +1,4 @@
+.cache/
+.idea/
+result_log.txt
+venv
