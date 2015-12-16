@@ -6,18 +6,30 @@ from appium import webdriver
 from sauceclient import SauceClient
 
 browsers = [{
-        'appiumVersion': '1.4.16',
-        'platformName': 'Android',
-        'platformVersion': '4.3',
-        'deviceName': 'Android Emulator',
-        'name': 'Python Appium Android 4.3 example'
-    }, {
-        'appiumVersion': '1.4.16',
-        'platformName': 'Android',
-        'platformVersion': '5.0',
-        'deviceName': 'Android Emulator',
-        'name': 'Python Appium Android 5.0 example'
-    }]
+    'appiumVersion': '1.4.16',
+    'platformName': 'Android',
+    'platformVersion': '4.3',
+    'deviceName': 'Android Emulator',
+    'name': 'Python Appium Android 4.3 example'
+}, {
+    'appiumVersion': '1.4.16',
+    'platformName': 'Android',
+    'platformVersion': '5.0',
+    'deviceName': 'Android Emulator',
+    'name': 'Python Appium Android 5.0 example'
+}, {
+    'appiumVersion': '1.4.16',
+    'platformName': 'Android',
+    'platformVersion': '5.1',
+    'deviceName': 'Android Emulator',
+    'name': 'Python Appium Android 5.1 example'
+}, {
+    'appiumVersion': '1.4.16',
+    'platformName': 'Android',
+    'platformVersion': '5.1',
+    'deviceName': 'Android Emulator',
+    'name': 'Python Appium Android 5.1 example'
+}]
 
 
 # This decorator is required to iterate over browsers
@@ -54,11 +66,6 @@ class BaseTest(unittest.TestCase):
         if BaseTest.build_tag:
             self.desired_capabilities['build'] = BaseTest.build_tag
 
-        print("http://%s:%s@%s:%s/wd/hub" %
-                                 (BaseTest.username,
-                                  BaseTest.access_key,
-                                  BaseTest.selenium_host,
-                                  BaseTest.selenium_port))
         self.driver = webdriver.Remote(
                 command_executor="http://%s:%s@%s:%s/wd/hub" %
                                  (BaseTest.username,
@@ -73,7 +80,9 @@ class BaseTest(unittest.TestCase):
         sauce_client = SauceClient(BaseTest.username, BaseTest.access_key)
         status = (sys.exc_info() == (None, None, None))
         sauce_client.jobs.update_job(self.driver.session_id, passed=status)
-        print("SauceOnDemandSessionID=%s job-name=%s" %(self.driver.session_id, "hh"))
+        test_name = "%s_%s" % (type(self).__name__, self.__name__)
+        with(open(test_name + '.testlog', 'w')) as outfile:
+            outfile.write("SauceOnDemandSessionID=%s job-name=%s\n" % (self.driver.session_id, test_name))
 
     @classmethod
     def setup_class(cls):
@@ -100,7 +109,3 @@ class BaseTest(unittest.TestCase):
         else:
             cls.selenium_host = "ondemand.saucelabs.com"
             cls.selenium_port = "80"
-
-
-
-

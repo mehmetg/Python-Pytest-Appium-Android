@@ -2,6 +2,7 @@ from __future__ import print_function
 import os
 import requests
 import hashlib
+import sys
 
 
 def upload_app(app_path, username, password):
@@ -15,12 +16,10 @@ def upload_app(app_path, username, password):
                 auth=(username, password),
                 headers={'Content-Type': 'application/octet-stream'})
     if resp.status_code != 200:
-        print(resp, out=sys.stderr)
+        print(resp, file=sys.stderr)
         raise Exception("Upload failed!")
     else:
-        if resp.json()['md5'] == src_md5:
-            print("File uploaded successfully!")
-        else:
+        if resp.json()['md5'] != src_md5:
             raise Exception("Upload failed: File corrupted!")
 
 

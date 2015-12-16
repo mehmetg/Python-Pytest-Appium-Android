@@ -15,5 +15,7 @@ $ export SAUCE_ACCESS_KEY=your_access_key
 * Install the required packages:
 ```$ pip install -r requirements.txt```
 
-# Running tests: -n option designates number of parallel tests and -s to show stdout for test id's.
+# Running tests: -n option designates number of parallel tests and -s to disable output capture.
 ```$ py.test -s -n 10 tests```
+
+## Test output will be captured in .testlog files as the pytest-xdist plugin has issues with not capturing stdout and stderr.

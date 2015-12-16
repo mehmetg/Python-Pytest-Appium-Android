@@ -2,3 +2,6 @@
 .idea/
 result_log.txt
 venv
+*.testlog
+*.pyc
+__pycache__
