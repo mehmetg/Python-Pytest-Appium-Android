@@ -73,6 +73,7 @@ class BaseTest(unittest.TestCase):
         sauce_client = SauceClient(BaseTest.username, BaseTest.access_key)
         status = (sys.exc_info() == (None, None, None))
         sauce_client.jobs.update_job(self.driver.session_id, passed=status)
+        print("SauceOnDemandSessionID=%s job-name=%s" %(self.driver.session_id, "hh"))
 
     @classmethod
     def setup_class(cls):
