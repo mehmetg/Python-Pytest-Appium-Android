@@ -18,4 +18,9 @@ $ export SAUCE_ACCESS_KEY=your_access_key
 # Running tests: -n option designates number of parallel tests and -s to disable output capture.
 ```$ py.test -s -n 10 tests```
 
-## Test output will be captured in .testlog files as the pytest-xdist plugin has issues with not capturing stdout and stderr.
+# Kown Issues:
+* Test output will be captured in .testlog files as the pytest-xdist plugin has issues with not capturing stdout and stderr. You can use the following commands to output session id's for CI integration and clean up.
+```
+$ cat *.testlog
+$ rm -rf *.testlog
+```
