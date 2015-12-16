@@ -42,6 +42,7 @@ class BaseTest(unittest.TestCase):
     selenium_host = None
     upload = True
     tunnel_id = None
+    build_tag = None
 
     # setUp runs before each test case
     def setUp(self):
@@ -50,6 +51,9 @@ class BaseTest(unittest.TestCase):
 
         if BaseTest.tunnel_id:
             self.desired_capabilities['tunnel-identifier'] = BaseTest.tunnel_id
+        if BaseTest.build_tag:
+            self.desired_capabilities['build'] = BaseTest.build_tag
+            
         print("http://%s:%s@%s:%s/wd/hub" %
                                  (BaseTest.username,
                                   BaseTest.access_key,
@@ -72,6 +76,7 @@ class BaseTest(unittest.TestCase):
 
     @classmethod
     def setup_class(cls):
+        cls.build_tag = os.environ.get('BUILD_TAG', None)
         cls.tunnel_id = os.environ.get('TUNNEL_IDENTIFIER', None)
         cls.username = os.environ.get('SAUCE_USERNAME', None)
         cls.access_key = os.environ.get('SAUCE_ACCESS_KEY', None)
