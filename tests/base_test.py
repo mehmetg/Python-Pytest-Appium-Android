@@ -41,17 +41,16 @@ class BaseTest(unittest.TestCase):
     selenium_port = None
     selenium_host = None
     upload = True
+    tunnel_id = None
 
     # setUp runs before each test case
     def setUp(self):
         self.desired_capabilities['name'] = self.id()
         self.desired_capabilities['app'] = BaseTest.app
-        print("http://%s:%s@%s:%s/wd/hub" %
-                                 (BaseTest.username,
-                                  BaseTest.access_key,
-                                  BaseTest.selenium_host,
-                                  BaseTest.selenium_port))
-        print(self.desired_capabilities)
+
+        if BaseTest.tunnel_id:
+            self.desired_capabilities['tunnel-identifier'] = BaseTest.tunnel_id
+
         self.driver = webdriver.Remote(
                 command_executor="http://%s:%s@%s:%s/wd/hub" %
                                  (BaseTest.username,
@@ -69,8 +68,9 @@ class BaseTest(unittest.TestCase):
 
     @classmethod
     def setup_class(cls):
-        cls.username = os.environ['SAUCE_USERNAME']
-        cls.access_key = os.environ['SAUCE_ACCESS_KEY']
+        cls.tunnel_id = os.environ.get('TUNNEL_IDENTIFIER', None)
+        cls.username = os.environ.get('SAUCE_USERNAME', None)
+        cls.access_key = os.environ.get('SAUCE_ACCESS_KEY', None)
         cls.app_path = os.environ.get("APP", None)
         if cls.app_path:
             if cls.app_path and (cls.app_path.startswith('http://') or cls.app_path.startswith('http://')):
